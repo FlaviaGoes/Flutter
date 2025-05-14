@@ -15,7 +15,7 @@ Map<Botoes, String> botoesString = {
   Botoes.nine: "9",
   Botoes.somar: "+",
   Botoes.subtrair: "-",
-  Botoes.multiplicar: "X",
+  Botoes.multiplicar: "x",
   Botoes.dividir: "/",
   Botoes.calcular: "=",
   Botoes.ponto: ".",
