@@ -41,7 +41,7 @@ class _MyCalculatorState extends State<MyCalculator> {
         _numbersController.text = " ";
       }
 
-      if (_contadorInputs <= 20 && !"Erro".contains(_numbersController.text)) {
+      if (_contadorInputs <= 15 && !"Erro".contains(_numbersController.text)) {
         _numbersController.text += input;
         _contadorInputs++;
       }
@@ -53,7 +53,7 @@ class _MyCalculatorState extends State<MyCalculator> {
       String texto = _numbersController.text;
 
       if (_contadorPonto == 0 &&
-          (_contadorInputs > 0 && _contadorInputs < 20) &&
+          (_contadorInputs > 0 && _contadorInputs < 15) &&
           !"+-x/.".contains(texto[texto.length - 1])) {
         _numbersController.text += input;
         _contadorInputs++;
@@ -123,7 +123,8 @@ class _MyCalculatorState extends State<MyCalculator> {
           "+-x/".split('').any((op) => texto.contains(op))) {
         //Separando números e operadores
         for (int i = 0; i < texto.length; i++) {
-          if ("+-x/".contains(texto[i]) && !(i == 0)) {
+          if ("+-x/".contains(texto[i]) &&
+              !(i == 0 || "e".contains(texto[i - 1]))) {
             operandos.add(texto[i]);
             numero = double.tryParse(auxTexto);
             numeros.add(numero ?? 0);
