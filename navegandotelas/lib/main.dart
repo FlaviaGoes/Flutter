@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:navegandotelas/classes/login_details.dart';
+import 'package:navegandotelas/pages/aula09.dart';
 import 'package:navegandotelas/widgets/login_text_field.dart';
 import 'package:navegandotelas/widgets/tipo_login.dart';
 
@@ -10,14 +11,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Tela Login',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        primaryColor: Colors.green,
       ),
+      initialRoute: '/',
+      routes: {
+        '/aula09': (context) => const Aula09(),
+      },
       home: const MyHomePage(),
     );
   }
@@ -74,48 +79,61 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(width: 200, 'assets/img/icon.png'),
-            SizedBox(height: 48),
-            TipoLogin(tipoLogin: _tipoLogin, onPressed: _alterarTipoLogin),
-            SizedBox(height: 16),
-            LoginTextField(controller: _userController, tiposLogin: _tipoCampoLogin),
-            SizedBox(height: 16),
-            TextField(
-              controller: _senhaController,
-              obscureText: _senhaEscondida,
-              decoration: InputDecoration(
-                label: Text('Senha'),
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  onPressed: _alterarVisibilidade,
-                  icon: Icon(
-                    _senhaEscondida ? Icons.visibility_off : Icons.visibility
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(width: 200, 'assets/img/icon.png'),
+              SizedBox(height: 48),
+              TipoLogin(tipoLogin: _tipoLogin, onPressed: _alterarTipoLogin),
+              SizedBox(height: 16),
+              LoginTextField(controller: _userController, tiposLogin: _tipoCampoLogin),
+              SizedBox(height: 16),
+              TextField(
+                controller: _senhaController,
+                obscureText: _senhaEscondida,
+                decoration: InputDecoration(
+                  label: Text('Senha'),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: _alterarVisibilidade,
+                    icon: Icon(
+                      _senhaEscondida ? Icons.visibility_off : Icons.visibility
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text('Memorizar'),
-                SizedBox(height: 8),
-                Switch(
-                  value: _memorizar,
-                  onChanged: (boo){
-                    setState(() {
-                      _memorizar = !_memorizar;
-                    });
-                  }
-                )
-              ],
-            )
-          ],
-        ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('Memorizar'),
+                  SizedBox(height: 8),
+                  Switch(
+                    value: _memorizar,
+                    onChanged: (boo){
+                      setState(() {
+                        _memorizar = !_memorizar;
+                      });
+                    }
+                  )
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context, 
+                    '/aula09',
+                    arguments: {'usuario': _userController.text},
+                  );
+                }, 
+                child: const Text('Login'),
+              )
+            ],
+          ),
+        )
       ),
     );
   }
