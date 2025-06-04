@@ -31,15 +31,15 @@ class _TipoLoginState extends State<TipoLogin>{
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
+              child: Text('Usuario'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text('E-mail'),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('CPF'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Telefone'),
             ),
           ],
         )

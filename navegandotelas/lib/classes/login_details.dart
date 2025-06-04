@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum TiposLogin {email, cpf, telefone}
+enum TiposLogin {usuario, email, cpf}
 
 class LoginDetails {
   late final String hint;
@@ -16,9 +16,9 @@ class LoginDetails {
   // É um método estático para a classe não precisar ser instanciada
   static Map<TiposLogin, LoginDetails> loginDetails(){
     return {
-      TiposLogin.cpf: LoginDetails(
-        hint: '111.111.111-11',
-        label: 'CPF',
+      TiposLogin.usuario: LoginDetails(
+        hint: 'Nome',
+        label: 'Usuario',
         prefixIcon: Icon(Icons.person),
       ),
       TiposLogin.email: LoginDetails(
@@ -26,9 +26,9 @@ class LoginDetails {
         label: 'E-mail',
         prefixIcon: Icon(Icons.email),
       ),
-      TiposLogin.telefone: LoginDetails(
-        hint: '(xx) xxxxx-xxxx',
-        label: 'Telefone',
+      TiposLogin.cpf: LoginDetails(
+        hint: 'xxx.xxx.xxx-xx',
+        label: 'CPF',
         prefixIcon: Icon(Icons.phone),
       )
     };

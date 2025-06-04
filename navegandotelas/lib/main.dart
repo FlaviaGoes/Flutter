@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late TextEditingController _userController;
   late TextEditingController _senhaController;
-  TiposLogin _tipoCampoLogin = TiposLogin.email;
+  TiposLogin _tipoCampoLogin = TiposLogin.usuario;
 
   var _senhaEscondida = true;
   var _tipoLogin = [true, false, false];
@@ -123,12 +123,29 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context, 
-                    '/aula09',
-                    arguments: {'usuario': _userController.text},
-                  );
-                }, 
+                  if(_userController.text.isNotEmpty && _senhaController.text == 'admin') {
+                    Navigator.pushNamed(
+                      context, 
+                      '/aula09',
+                      arguments: {'usuario': _userController.text},
+                    );
+                  } else {
+                    showDialog(
+                      context: context, 
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Atenção'),
+                          content: const Text('Preencha os campos corretamente.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context), 
+                              child: const Text('OK')),
+                          ],
+                        );
+                      }
+                    );
+                  }
+                },
                 child: const Text('Login'),
               )
             ],

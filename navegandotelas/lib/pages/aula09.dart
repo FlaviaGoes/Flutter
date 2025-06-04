@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:navegandotelas/pages/aula09_dashboard.dart';
+import 'package:navegandotelas/pages/aula09_disciplinas.dart';
 
 class Aula09 extends StatefulWidget {
 
@@ -11,6 +13,11 @@ class Aula09 extends StatefulWidget {
 
 class _Aula09State extends State<Aula09> {
 
+  final List<Widget> _subtelas = [
+    Aula09Dashboard(usuario: 'nomeUsuario'),
+    Aula09Disciplinas(),
+  ];
+  
   var _itemSelecionado = 0;
 
   @override
@@ -22,6 +29,9 @@ class _Aula09State extends State<Aula09> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) => {},
       child: Scaffold(
+        body: Center(
+          child: _subtelas[_itemSelecionado],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.green,
           selectedItemColor: Colors.white,
