@@ -1,8 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:navegandotelas/classes/login_details.dart';
 import 'package:navegandotelas/pages/aula09.dart';
+import 'package:navegandotelas/pages/aula09_dashboard.dart';
+import 'package:navegandotelas/pages/aula09_disciplinas.dart';
 import 'package:navegandotelas/widgets/login_text_field.dart';
 import 'package:navegandotelas/widgets/tipo_login.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _dashboardNavigatorKey = GlobalKey<NavigatorState>();
+final _disciplinaNavigatorKey = GlobalKey<NavigatorState>();
+
+final _router = GoRouter(
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: '/',
+    routes: [
+      // Tela Login
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const MyHomePage(),
+      ),
+
+      //Shell com abas da Aula09
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          final args = state.extra as Map<String, String>?;
+          final usuario = args?['usuario'] ?? '';
+          return Aula09(usuario: usuario, navigationShell: navigationShell);
+        },
+        branches: [
+          StatefulShellBranch(
+            navigatorKey: _dashboardNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/dashboard',
+                builder: (context, state) {
+                  final args = state.extra as Map<String, String>?;
+                  final usuario = args?['usuario'] ?? '';
+                  return Aula09Dashboard(usuario: usuario);
+                },
+              )
+            ]
+          ),
+          StatefulShellBranch(
+            navigatorKey: _disciplinaNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/disciplinas',
+                builder: (context, state) => Aula09Disciplinas(),
+              )
+            ]
+          )
+        ]
+      ),
+      // GoRoute(
+      //   path: '/aula09',
+      //   builder: (context, state) {
+      //     final args = state.extra as Map<String, String>?;
+      //     final usuario = args?['usuario'] ?? '';
+      //     return Aula09(usuario: usuario);
+      //   }
+      // )
+    ]
+  );
 
 void main() {
   runApp(const MyApp());
@@ -13,17 +73,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Tela Login',
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
-      initialRoute: '/',
-      routes: {
-        '/aula09': (context) => const Aula09(),
-      },
-      home: const MyHomePage(),
+      routerConfig: _router,
     );
   }
 }
@@ -124,11 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   if(_userController.text.isNotEmpty && _senhaController.text == 'admin') {
-                    Navigator.pushNamed(
-                      context, 
-                      '/aula09',
-                      arguments: {'usuario': _userController.text},
-                    );
+                    context.go('/dashboard', extra: {'usuario': _userController.text});
                   } else {
                     showDialog(
                       context: context, 
